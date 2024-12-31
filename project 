@@ -1,0 +1,170 @@
+Here are 5 senior-level scenarios for setting up AWS infrastructure using Terraform, each with different requirements and advanced configurations:
+
+
+---
+
+Scenario 1: Multi-Region Disaster Recovery Setup
+
+Purpose: Deploy infrastructure in two regions for redundancy.
+
+Components:
+
+Primary and secondary VPCs in two regions.
+
+Replicated RDS instances (read-replicas) for disaster recovery.
+
+Load balancer that can switch regions in case of failure (Route 53 health checks).
+
+
+
+Directory Structure:
+
+/aws-dr
+  ├── main.tf
+  ├── variables.tf
+  ├── outputs.tf
+  ├── provider.tf
+  └── env/
+      ├── primary.tfvars
+      └── secondary.tfvars
+
+Key Configurations:
+
+Primary Region:
+
+terraform apply -var-file=env/primary.tfvars
+
+Secondary Region:
+
+terraform apply -var-file=env/secondary.tfvars
+
+
+
+---
+
+Scenario 2: Autoscaling and High Availability
+
+Purpose: Create an auto-scaling group and ensure high availability across multiple Availability Zones (AZs).
+
+Components:
+
+Launch template with a custom AMI.
+
+Auto Scaling Group (ASG).
+
+Application Load Balancer (ALB) with health checks.
+
+
+
+Example Files:
+
+main.tf:
+
+Create an ALB and ASG.
+
+
+Variables: Instance types, AMI IDs, and scaling policies.
+
+
+Commands:
+
+terraform apply -var-file=env/dev.tfvars
+
+
+---
+
+Scenario 3: Serverless Application with Lambda and API Gateway
+
+Purpose: Deploy a serverless application.
+
+Components:
+
+AWS Lambda functions triggered by API Gateway.
+
+DynamoDB for data storage.
+
+S3 for static website hosting.
+
+
+
+Example Steps:
+
+Define Lambda code as ZIP in S3.
+
+Use Terraform modules to set up API Gateway.
+
+
+Commands:
+
+terraform apply -var-file=env/prod.tfvars
+
+
+---
+
+Scenario 4: CI/CD Infrastructure for Multi-Environment Pipelines
+
+Purpose: Build CI/CD pipelines for dev, test, and prod using CodePipeline and CodeBuild.
+
+Components:
+
+S3 for artifacts.
+
+IAM roles for CodePipeline and CodeBuild.
+
+Separate pipelines for each environment.
+
+
+
+Example Files:
+
+Pipeline Config:
+
+dev-pipeline.tf
+
+test-pipeline.tf
+
+prod-pipeline.tf
+
+
+
+Commands:
+
+terraform apply -var-file=env/test.tfvars
+
+
+---
+
+Scenario 5: Data Lake Setup with EMR and S3
+
+Purpose: Deploy a scalable data lake architecture.
+
+Components:
+
+S3 for raw, processed, and analytics layers.
+
+EMR cluster for big data processing.
+
+IAM roles and policies for EMR and S3 access.
+
+
+
+Directory Structure:
+
+/aws-data-lake
+  ├── main.tf
+  ├── variables.tf
+  ├── outputs.tf
+  └── env/
+      ├── dev.tfvars
+      ├── test.tfvars
+      └── prod.tfvars
+
+Commands:
+
+terraform apply -var-file=env/dev.tfvars
+
+
+---
+
+Let me know if you want detailed files for any scenario!
+
